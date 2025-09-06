@@ -10,8 +10,13 @@ dotenv.config();
 
 
 
+
+
 const app = express();
-app.use(cors());
+
+app.use(cors({
+  origin: "https://your-frontend.vercel.app",  // Replace with your Vercel frontend URL
+}));
 app.use(express.json());
 
 
