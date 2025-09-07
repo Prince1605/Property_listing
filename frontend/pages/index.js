@@ -5,15 +5,24 @@ import PropertyCard from "../components/PropertyCard";
 export default function Home() {
   const [properties, setProperties] = useState([]);
   const router = useRouter();
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  if (!token) router.push("/admin/login");
 
-  useEffect(() => {
-    const token = localStorage.getItem("adminToken");
-    if (!token) router.push("/admin/login"); // redirect to login page if not logged in
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/properties`)
+    .then(res => res.json())
+    .then(data => setProperties(data))
+    .catch(err => console.error("Error fetching properties:", err));
+}, []);
 
-    fetch("http://localhost:5000/api/properties")
-      .then(res => res.json())
-      .then(data => setProperties(data));
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("adminToken");
+  //   if (!token) router.push("/admin/login"); // redirect to login page if not logged in
+
+  //   fetch("http://localhost:5000/api/properties")
+  //     .then(res => res.json())
+  //     .then(data => setProperties(data));
+  // }, []);
 
   const handleAddClick = () => {
     router.push("/admin/add"); // navigate to add property page
