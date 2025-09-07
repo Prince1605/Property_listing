@@ -9,9 +9,15 @@ const app = express();
 
 // ✅ CORS setup
 app.use(cors({
-  origin: ["http://localhost:3000", "https://property-listing-five-green.vercel.app"],
-  credentials: true
+  origin: [
+    "http://localhost:3000", 
+    "https://property-listing-frontend.vercel.app" // <-- yaha apna Vercel frontend URL daalo
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 app.use(express.json());
 
 // ✅ MongoDB

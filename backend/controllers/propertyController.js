@@ -14,9 +14,21 @@ export const getPropertyById = async (req, res) => {
 };
 
 // Add new property (Admin only) -> isko kewal admin add kar skta hy 
+
 export const addProperty = async (req, res) => {
   const { title, price, location, image, description } = req.body;
-  const newProperty = new Property({ title, price, location, image, description });
-  const saved = await newProperty.save();
-  res.status(201).json(saved);
+
+  if (!title || !price || !location || !image || !description) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  const property = await Property.create({
+    title,
+    price,
+    location,
+    image,
+    description,
+  });
+
+  res.status(201).json(property);
 };
