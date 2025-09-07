@@ -25,11 +25,15 @@ const handleAdd = async (e) => {
 
   if (!token) return setMessage("Please login first");
 
-  const res = await fetch("http://localhost:5000/api/properties", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-    body: JSON.stringify(property),
-  });
+const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/properties`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  },
+  body: JSON.stringify(property),
+});
+
 
   const data = await res.json();
   if (res.ok) {
